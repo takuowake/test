@@ -1,30 +1,21 @@
 package main
 
-import (
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
-)
+import "github.com/gin-gonic/gin"
 
-type User struct {
-	gorm.Model
-	Username string `form:"username" binding:"required" gorm:"unique;not null"`
-	Password string `form:"password" binding:"required"`
+type Person struct {
+	ID string `uri:"id" binding:"required,uuid"`
+	Name string `uri:"name" binding:"required"`
 }
 
 func main() {
-	router := gin.Default()
-	// セッションCookieの設定
-	store := cookie.NewStore([]byte("secret"))
-	router.Use(sessions.Sessions("mysession", store))
-	// ログイン用のhandler
-	router.POST("/login", handler.Login)
-	// 認証済のみアクセス可能なグループ
-	authUserGroup := router.Group("/auth")
-	authUserGroup.Use(middleware.LoginCheckMiddleware())
-	{
-		authUserGroup.GET("/getSample", handler.getSample)
-	}
-	router.Run()
+	route := gin.Default()
+	route.GET("/:name/:id", func(c *gin.Context) {
+		var person Person
+		if err := c.ShouldBindUri(&person); err != nil {
+			c.JSON(400, gin.H{"msg": err})
+			return
+		}
+		c.JSON(200, gin.H{"name": person.Name, "uuid": person.ID})
+	})
+	route.Run(":8080")
 }
