@@ -1,29 +1,25 @@
 package main
 
-import (
-	"github.com/gin-gonic/contrib/sessions"
-	"github.com/gin-gonic/gin"
-)
+import "github.com/golang/protobuf/proto"
 
-func main() {
-	r := gin.Default()
+...
+package helloworld
+...
 
-	store := sessions.NewCookieStore([]byte("secret"))
-	r.Use(sessions.Sessions("mysession", store))
-
-	r.GET("/uncr", func(c *gin.Context) {
-		session := sessions.Default(c)
-		var count int
-		v := session.Get("count")
-		if v == nil {
-			count = 0
-		} else {
-			count = v.(int)
-			count += 1
-		}
-		session.Set("count", count)
-		session.Save()
-		c.JSON(200, gin.H{"count": count})
-	})
-	r.Run(":8080")
+type HelloRequest struct {
+	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 }
+
+func (m *HelloRequest) Reset() { *m = HelloRequest{} }
+func (m *HelloRequest) String() { return proto.CompactTextString(m) }
+func (*HelloRequest) ProtoMessage() {}
+func (*HelloRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+
+func (m *HelloRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+...
+
