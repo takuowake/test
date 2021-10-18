@@ -126,9 +126,21 @@ func TypeConversion() {
 	fmt.Printf("%T %v\n", ss, ss)
 
 	H := "Hello World"
-	fmt.Println(H[0])
+	fmt.Println(string(H[0]))
 }
 
+func Array() {
+	var a [2]int
+	a[0] = 100
+	a[1] = 200
+	fmt.Println(a)
+	var b [2]int = [2]int{100, 200}
+	fmt.Println(b)
+	var c []int = []int{100, 200}
+	c = append(c, 200)
+	fmt.Println(c)
+
+}
 
 func main() {
 	//Var()
@@ -138,5 +150,6 @@ func main() {
 	//Calculation()
 	//String()
 	//Bool()
-	TypeConversion()
+	//TypeConversion()
+	Array()
 }
