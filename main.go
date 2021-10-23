@@ -139,7 +139,105 @@ func Array() {
 	var c []int = []int{100, 200}
 	c = append(c, 200)
 	fmt.Println(c)
+}
 
+func Slice() {
+	n := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(n)
+	fmt.Println(n[:2])
+	fmt.Println(n[3:])
+	fmt.Println(n[1:5])
+
+	n[2] = 100
+	fmt.Println(n)
+
+	var board = [][]int{
+		[]int{1, 2, 3},
+		[]int{4, 5, 6},
+		[]int{7, 8, 9},
+	}
+	fmt.Println(board)
+
+	n = append(n, 100, 200, 300, 400)
+	fmt.Println(n)
+}
+
+func SliceMake() {
+	a := make([]int, 3, 5)
+	fmt.Printf("len=%d cap=%d value=%d\n", len(a), cap(a), a)
+	b := make([]int, 5, 5)
+	fmt.Printf("len=%d cap=%d value=%d\n", len(b), cap(b), b)
+	b = make([]int, 0)
+	fmt.Printf("len=%d cap=%d value=%d\n", len(b), cap(b), b)
+
+	var n []int
+	fmt.Printf("len=%d cap=%d value=%d\n", len(n), cap(n), n)
+
+	//m := make([]int, 0, 5)
+	m := make([]int, 5)
+	for i := 0; i < 5; i++ {
+		m = append(m, i)
+		fmt.Println(m)
+	}
+	fmt.Println(m)
+}
+
+func Map() {
+	m := map[string]int{"apple": 100, "banana": 300}
+	fmt.Println(m)
+	fmt.Println(m["apple"])
+	m["apple"] = 200
+	fmt.Println(m)
+	m["new"] = 500
+	fmt.Println(m)
+	fmt.Println(m["nothing"])
+	v, ok := m["nothing"]
+	fmt.Println(v, ok)
+	v2, ok2 := m["apple"]
+	fmt.Println(v2, ok2)
+
+	var m2 = make(map[string]int)
+	m2["now"] = 5000
+	fmt.Println(m2)
+
+	var s []int
+	if s == nil {
+		fmt.Println("Nil")
+	}
+}
+
+func Byte() {
+	b := []byte{72, 73}
+	fmt.Println(b)
+	fmt.Println(string(b))
+
+	c := []byte("HI")
+	fmt.Println(c)
+	fmt.Println(string(c))
+}
+
+func add(x, y int) (int, int) {
+	return x + y, x-y
+}
+
+func cal(price, item int) (result int){
+	result = price * item
+	return result
+}
+
+func Func() {
+	fmt.Println(add(34, 26))
+	r3 := cal(300, 4)
+	fmt.Println(r3)
+
+	f := func(x int) {
+		fmt.Println("inner func", x)
+	}
+	f(1)
+
+	func(x int) {
+		fmt.Println("inner func", x)
+	}(1)
 }
 
 func main() {
@@ -151,5 +249,10 @@ func main() {
 	//String()
 	//Bool()
 	//TypeConversion()
-	Array()
+	//Array()
+	//Slice()
+	//SliceMake()
+	//Map()
+	//Byte()
+	Func()
 }
