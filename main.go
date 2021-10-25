@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 //You can declare "var" outside the function.
@@ -240,6 +242,216 @@ func Func() {
 	}(1)
 }
 
+func IncrementGenerator() (func() int) {
+	x := 0
+	return func() int {
+		x++
+		return x
+	}
+}
+
+func circleArea(pi float64) func(radius float64) float64 {
+	return func(radius float64) float64 {
+		return pi * radius * radius
+	}
+}
+
+func Closure() {
+	//x := 0
+	//increment := func() int {
+	//	x++
+	//	return x
+	//}
+	//fmt.Println(increment())
+	//fmt.Println(increment())
+	//fmt.Println(increment())
+
+	counter := IncrementGenerator()
+	fmt.Println(counter())
+	fmt.Println(counter())
+	fmt.Println(counter())
+	fmt.Println(counter())
+
+	c1 := circleArea(3.14)
+	fmt.Println(c1(2))
+	fmt.Println(c1(3))
+
+	c2 := circleArea(3)
+	fmt.Println(c2(2))
+	fmt.Println(c2(3))
+}
+
+func Foo(params...int) {
+	fmt.Println(len(params), params)
+	for _, param := range params {
+		fmt.Println(param)
+	}
+}
+
+func VariadicArgument() {
+	Foo()
+	Foo(20, 30)
+	Foo(20, 30, 40)
+
+	s := []int{1, 2, 3}
+	fmt.Println(s)
+	Foo(s...)
+}
+
+func Exercise() {
+	//Exercise1
+	var f float64 = 1.11
+	var i int = int(f)
+	fmt.Println(i)
+
+	f2 := 1.11
+	i2 := int(f2)
+	fmt.Println(i2)
+
+	//Exercise3
+	m := map[string]int{
+		"Mike":20,
+		"Nancy":24,
+		"Messi":30,
+	}
+	fmt.Printf("%T %v", m, m)
+}
+
+func By2(num int)string {
+	if num % 2 == 0 {
+		return "ok"
+	} else {
+		return "no"
+	}
+}
+
+func If() {
+	num := 100
+	if num % 2 == 0 {
+		fmt.Println("by 2")
+	} else if num % 3 == 0 {
+		fmt.Println("by 3")
+	} else {
+		fmt.Println("else")
+	}
+
+	x, y := 20, 20
+	if x == 20 && y == 20 {
+		fmt.Println("&&")
+	}
+	if x == 20 || y == 20 {
+		fmt.Println("||")
+	}
+
+	result := By2(10)
+	if result == "ok" {
+		fmt.Println("great")
+	}
+	fmt.Println(result)
+
+	if result2 := By2(20); result2 == "ok" {
+		fmt.Println("great2")
+	}
+}
+
+func For() {
+	for i := 0; i < 10; i++ {
+		if i == 3 {
+			fmt.Println("continue")
+			continue
+		}
+		if i > 5 {
+			fmt.Println("break")
+			break
+		}
+		fmt.Println(i)
+	}
+
+	sum := 1
+	for sum < 10 {
+		sum += sum
+		fmt.Println(sum)
+	}
+	fmt.Println(sum)
+
+	for {
+		fmt.Println("hello")
+	}
+}
+
+func Range() {
+	l := []string{"python", "go", "java"}
+	for i := 0; i < len(l); i++ {
+		fmt.Println(i, l[i])
+	}
+	for i, v := range l {
+		fmt.Println(i, v)
+	}
+	for _, v := range l {
+		fmt.Println(v)
+	}
+
+	m := map[string]int{"apple":200, "banana":100}
+	for k, i := range m {
+		fmt.Println(k, i)
+	}
+	for k := range m {
+		fmt.Println(k)
+	}
+	for _, v := range m {
+		fmt.Println(v)
+	}
+}
+
+func GetOsName() string {
+	return "ma"
+}
+
+func Switch() {
+	switch os := GetOsName(); os {
+	case "mac":
+		fmt.Println("mac!!")
+	case "windows":
+		fmt.Println("windows!!")
+	default:
+		fmt.Println("default!!", os)
+	}
+
+	t := time.Now()
+	fmt.Println(t.Hour())
+	switch {
+	case t.Hour() < 12:
+		fmt.Println("morning")
+	case t.Hour() < 17:
+		fmt.Println("afternoon")
+	case t.Hour() > 17:
+		fmt.Println("night")
+	}
+}
+
+func Foo2() {
+	fmt.Println("Hello foo2")
+	fmt.Println("World foo2")
+}
+func Defer(){
+	file, _ := os.Open("./var.go")
+	/*
+		Foo2()
+		defer fmt.Println("World")
+		fmt.Println("Hello")
+
+		fmt.Println("run")
+		defer fmt.Println(1)
+		defer fmt.Println(2)
+		defer fmt.Println(3)
+		fmt.Println("success")
+	*/
+	defer file.Close()
+	data := make([]byte, 100)
+	file.Read(data)
+	fmt.Println(string(data))
+}
+
 func main() {
 	//Var()
 	//foo()
@@ -254,5 +466,14 @@ func main() {
 	//SliceMake()
 	//Map()
 	//Byte()
-	Func()
+	//Func()
+	//Closure()
+	//VariadicArgument()
+	//Exercise()
+	//If()
+	//For()
+	//Range()
+	//Switch()
+	Defer()
 }
+
