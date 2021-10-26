@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -452,6 +454,45 @@ func Defer(){
 	fmt.Println(string(data))
 }
 
+func LoggingSetting(logFile string) {
+	logfile, _ := os.OpenFile(logFile, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	multiLogFile := io.MultiWriter(os.Stdout, logfile)
+	log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+	log.SetOutput(multiLogFile)
+}
+
+func Log() {
+	LoggingSetting("test.log")
+	_, err := os.Open("sakkaj")
+	if err != nil {
+		log.Fatalln("exit", err)
+	}
+	log.Println("test")
+	log.Printf("%T %v", "test", "test")
+
+	//log.Fatalln("error")
+	log.Fatalf("%T %v", "test", "test")
+}
+
+func ErrorHandling() {
+	file, err := os.Open("./var.go")
+	if err != nil {
+		log.Fatalln("Error!")
+	}
+	defer file.Close()
+
+	data := make([]byte, 100)
+	count, err := file.Read(data)
+	if err != nil {
+		log.Fatalln("Error")
+	}
+	fmt.Println(count, string(data))
+
+	if err = os.Chdir("test"); err != nil {
+		log.Fatalln("Error!!")
+	}
+}
+
 func main() {
 	//Var()
 	//foo()
@@ -474,6 +515,8 @@ func main() {
 	//For()
 	//Range()
 	//Switch()
-	Defer()
+	//Defer()
+	//Log()
+	ErrorHandling()
 }
 
