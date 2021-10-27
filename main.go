@@ -493,6 +493,48 @@ func ErrorHandling() {
 	}
 }
 
+func thirdPartyConnectDb() {
+	panic("Unable to connect database!")
+}
+
+func save() {
+	defer func() {
+		s := recover()
+		fmt.Println(s)
+	}()
+	thirdPartyConnectDb()
+}
+
+func Panic() {
+	save()
+	fmt.Println("ok?")
+}
+
+func Exercise2()  {
+	l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4}
+	l2 := l[i]
+	for i := 0; i < len(l); i++ {
+		if l2 > l[i] {
+			l2 = l[i]
+		}
+	}
+	fmt.Println(l2)
+
+	m := map[string]int{
+		"apple":  200,
+		"banana": 300,
+		"grapes": 150,
+		"orange": 80,
+		"papaya": 500,
+		"kiwi":   90,
+	}
+	fmt.Println(m)
+	total := 0
+	for i := 0; i < len(m); i++ {
+		fmt.Println(m[i])
+	}
+}
+
 func main() {
 	//Var()
 	//foo()
@@ -517,6 +559,8 @@ func main() {
 	//Switch()
 	//Defer()
 	//Log()
-	ErrorHandling()
+	//ErrorHandling()
+	//Panic()
+	Exercise2()
 }
 
