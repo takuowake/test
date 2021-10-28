@@ -512,13 +512,20 @@ func Panic() {
 
 func Exercise2()  {
 	l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4}
-	l2 := l[i]
-	for i := 0; i < len(l); i++ {
-		if l2 > l[i] {
-			l2 = l[i]
+
+	var min int
+
+	for i, num := range l {
+		if i==0 {
+			min = num
+			continue
+		}
+
+		if min >= num {
+			min = num
 		}
 	}
-	fmt.Println(l2)
+	fmt.Println(min)
 
 	m := map[string]int{
 		"apple":  200,
@@ -528,11 +535,82 @@ func Exercise2()  {
 		"papaya": 500,
 		"kiwi":   90,
 	}
-	fmt.Println(m)
-	total := 0
-	for i := 0; i < len(m); i++ {
-		fmt.Println(m[i])
+
+	var total int
+	for _, v := range m {
+		total += v
 	}
+	fmt.Println(total)
+}
+
+func One(x *int) {
+	*x = 1
+}
+
+func Pointer() {
+	var n int = 100
+	One(&n)
+	fmt.Println(n)
+	/*
+	fmt.Println(n)
+	fmt.Println(&n)
+
+	var p *int = &n
+	fmt.Println(p)
+	fmt.Println(*p)
+	*/
+}
+
+func pointerNew() {
+
+	s := make([]int, 0)
+	fmt.Printf("%T\n", s)
+
+	m := make(map[string]int)
+	fmt.Printf("%T\n", m)
+
+	ch := make(chan int)
+	fmt.Printf("%T\n", ch)
+
+	var p *int = new(int)
+	fmt.Printf("%T\n", p)
+
+	var st = new(struct{})
+	fmt.Printf("%T\n", st)
+
+	var p2 *int
+	fmt.Println(p2)
+}
+
+type Vertex struct {
+	X, Y int
+	S string
+}
+
+func Struct() {
+	v := Vertex{X:1, Y:2}
+	fmt.Println(v)
+	fmt.Println(v.X, v.Y)
+	v.X = 100
+	fmt.Println(v.X, v.Y)
+
+	v2 := Vertex{X:1}
+	fmt.Println(v2)
+
+	v3 := Vertex{1, 2, "takuo"}
+	fmt.Println(v3)
+
+	v4 := Vertex{}
+	fmt.Printf("%T %v\n", v4, v4)
+
+	var v5 Vertex
+	fmt.Printf("%T %v\n", v5, v5)
+
+	v6 := new(Vertex)
+	fmt.Printf("%T %v\n", v6, v6)
+
+	v7 := &Vertex{}
+	fmt.Printf("%T %v\n", v7, v7)
 }
 
 func main() {
@@ -561,6 +639,9 @@ func main() {
 	//Log()
 	//ErrorHandling()
 	//Panic()
-	Exercise2()
+	//Exercise2()
+	//Pointer()
+	//pointerNew()
+	Struct()
 }
 
