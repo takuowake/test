@@ -613,6 +613,54 @@ func Struct() {
 	fmt.Printf("%T %v\n", v7, v7)
 }
 
+func Exercise3() {
+	/*
+	var i int = 10
+	var p *int
+	p = &i
+	var j int
+	j = *p
+	fmt.Println(j)
+
+	*/
+	var i int = 100
+	var j int = 200
+	var p1 *int
+	var p2 *int
+	p1 = &i
+	p2 = &j
+	i = *p1 + *p2
+	p2 = p1
+	j = *p2 + i
+	fmt.Println(j)
+
+}
+
+type Vertex2 struct {
+	L, M int
+}
+
+func Area(v Vertex2) int {
+	return v.L * v.M
+}
+
+func (v Vertex2) Area() int {
+	return v.L * v.M
+}
+
+func (v *Vertex2) Scale(i int) {
+	v.L = v.L * i
+	v.M = v.M * i
+}
+
+func AreaVertex() {
+	v := Vertex2{3, 4}
+	//fmt.Println(Area(v))
+	//fmt.Println(v.Area())
+	v.Scale(10)
+	fmt.Println(v.Area())
+}
+
 func main() {
 	//Var()
 	//foo()
@@ -642,6 +690,9 @@ func main() {
 	//Exercise2()
 	//Pointer()
 	//pointerNew()
-	Struct()
+	//Struct()
+	//Exercise3()
+	AreaVertex()
 }
+
 
