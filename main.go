@@ -640,25 +640,79 @@ type Vertex2 struct {
 	L, M int
 }
 
-func Area(v Vertex2) int {
-	return v.L * v.M
+//func Area(v Vertex2) int {
+//	return v.L * v.M
+//}
+
+type Vertex3D struct {
+	Vertex2
+	N int
 }
 
-func (v Vertex2) Area() int {
-	return v.L * v.M
+//他のパッケージがデータを取る際にNewを用いることが多い
+func New(L, M, N int) *Vertex3D {
+	return &Vertex3D{Vertex2{L, M}, N}
 }
 
-func (v *Vertex2) Scale(i int) {
+func (v Vertex3D) Area3D() int {
+	return v.L * v.M * v.N
+}
+
+func (v *Vertex3D) Scale(i int) {
 	v.L = v.L * i
 	v.M = v.M * i
+	v.N = v.N * i
 }
 
 func AreaVertex() {
-	v := Vertex2{3, 4}
+	//v := Vertex2{3, 4}
 	//fmt.Println(Area(v))
 	//fmt.Println(v.Area())
+	v := New(3, 4, 5)
 	v.Scale(10)
-	fmt.Println(v.Area())
+	fmt.Println(v.Area3D())
+}
+
+type MyInt int
+
+func (i MyInt) Double() int {
+	fmt.Printf("%T %v\n", i, i)
+	fmt.Printf("%T %v\n", 1, 1)
+	return int(i * 2)
+}
+
+func NonStruct() {
+	MyInt := MyInt(10)
+	fmt.Println(MyInt.Double())
+}
+
+type Human interface {
+	Say() string
+}
+
+type Person struct {
+	Name string
+}
+
+func (p *Person) Say() string{
+	p.Name = "Mr." + p.Name
+	fmt.Println(p.Name)
+	return p.Name
+}
+
+func DriveCar(human Human) {
+	if human.Say() == "Mr.Mike" {
+		fmt.Println("Run")
+	} else {
+		fmt.Println("Get out")
+	}
+}
+
+func Interface() {
+	var mike Human = &Person{"Mike"}
+	var x Human = &Person{"x"}
+	DriveCar(mike)
+	DriveCar(x)
 }
 
 func main() {
@@ -692,7 +746,9 @@ func main() {
 	//pointerNew()
 	//Struct()
 	//Exercise3()
-	AreaVertex()
+	//AreaVertex()
+	//NonStruct()
+	Interface()
 }
 
 
